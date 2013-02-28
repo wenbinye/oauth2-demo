@@ -1,0 +1,6 @@
+assets/
+protected/runtime/
+vendor/
+composer.lock
+scratch.php
+protected/data/testdrive.db

@@ -1,0 +1,9 @@
+{
+  "name": "wenbinye/oauth-demo",
+  "description": "OAuth2 Server and Application demo",
+  "keywords": ["oauth2"],
+  "require" : {
+    "bshaffer/oauth2-server-php": "dev-develop",
+    "adoy/oauth2": "dev-master" 
+  }
+}
