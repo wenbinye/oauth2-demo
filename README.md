@@ -11,15 +11,7 @@ OAuth2 服务器实现和客户端调用示例
     $ curl -s http://getcomposer.org/installer | php
     $ composer.phar install
 
-修改 index.php 中 *$yii* 位置：
-
-```php
-<?php
-...
-$yii='/path/to/your/yii.php';
-```
-
-配置好服务器后在浏览器中打开 *http://your-host/index.php/client/index*
+配置好 Web 服务器后在浏览器中打开 *http://your-host/index.php/client/index*
 
 为了区分 oauth 客户端和 oauth 服务器，可以通过修改本机 host 文件，添加一个虚拟域名：
 

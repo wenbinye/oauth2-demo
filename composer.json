@@ -3,6 +3,8 @@
   "description": "OAuth2 Server and Application demo",
   "keywords": ["oauth2"],
   "require" : {
+    "php": ">=5.3.2",
+    "yiisoft/yii": "dev-master",
     "bshaffer/oauth2-server-php": "dev-develop",
     "adoy/oauth2": "dev-master" 
   }

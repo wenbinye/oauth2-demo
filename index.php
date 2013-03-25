@@ -1,6 +1,6 @@
 <?php
 $autoload=__DIR__.'/vendor/autoload.php';
-$yii='/home/admin/opt/php/yii/yii.php';
+$yii=__DIR__ . '/vendor/yiisoft/yii/framework/yii.php';
 $config=dirname(__FILE__).'/protected/config/main.php';
 
 defined('YII_DEBUG') or define('YII_DEBUG',true);
