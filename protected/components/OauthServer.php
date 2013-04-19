@@ -5,8 +5,9 @@ class OauthServer extends CApplicationComponent
     
     public function init()
     {
-        $db = Yii::app()->db->getPdoInstance();
-        $storage = new OAuth2_Storage_Pdo($db);
+        // $db = Yii::app()->db->getPdoInstance();
+        // $storage = new OAuth2_Storage_Pdo($db);
+        $storage = new \OAuth2\Storage\Memoize(new \OAuth2\Storage\YiiDb(\Yii::app()->db));
         $server = new OAuth2_Server($storage, array(
             'allow_implicit' => true,
             // 'token_bearer_header_name' => 'OAuth2'

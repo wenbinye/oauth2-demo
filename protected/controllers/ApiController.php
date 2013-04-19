@@ -20,11 +20,11 @@ class ApiController extends CController
     public function filterAccessToken($filterChain)
     {
         $request = OAuth2_Request::createFromGlobals();
-        $this->tokenData = Yii::app()->oauthServer->getAccessTokenData($request);
-        if ( !$this->tokenData ) {
-            Yii::app()->oauthServer->getResponse()->send();
-        } else {
+        if ( Yii::app()->oauthServer->verifyResourceRequest($request) ) {
+            $this->tokenData = Yii::app()->oauthServer->getAccessTokenData($request);
             $filterChain->run();
+        } else {
+            Yii::app()->oauthServer->getResponse()->send();
         }
     }
 }
