@@ -7,7 +7,9 @@ class StorageTest extends \OAuth2_StorageTest
     {
         $instance = Bootstrap::getInstance();
         return array(
-            array($instance->getYiidb())
+            array($instance->getYiidb()),
+            array($instance->getMemoizedYiidb()),
+            array($instance->getYiiCache())
         );
     }
 }
@@ -16,6 +18,7 @@ class Bootstrap
 {
     protected static $instance;
     private $yiidb;
+    private $yiicache;
     
     public static function getInstance()
     {
@@ -66,5 +69,58 @@ class Bootstrap
             $this->yiidb = new \OAuth2\Storage\YiiDb($db, array(), false);
         }
         return $this->yiidb;
+    }
+
+    public function getMemoizedYiidb()
+    {
+        $this->yiidb = null;
+        return new \OAuth2\Storage\Memoize($this->getYiidb());
+    }
+
+    protected function getCacheDir()
+    {
+        return \Yii::getPathOfAlias('application.runtime.oauth2-cache');
+    }
+
+    protected function removeCacheDir()
+    {
+        $dir = $this->getCacheDir();
+        if ( file_exists($dir) && is_dir($dir) ) {
+            $dh = opendir($dir);
+            if ( !$dh ) {
+                die("Cannot open dir $dir");
+            }
+            while ( false !== ($file = readdir($dh)) ) {
+                if ( $file != '.' && $file != '..' ) {
+                    unlink($dir.'/'.$file);
+                }
+            }
+            closedir($dh);
+            rmdir($dir);
+        }
+    }
+
+    protected function createCache()
+    {
+        $cache = \Yii::createComponent(array(
+            'class' => 'CFileCache',
+            'cachePath' => $this->getCacheDir()
+        ));
+        $cache->init();
+        $cache->set('oauth_clients/oauth_test_client', array('client_id'=>'oauth_test_client', 'client_secret'=>'testpass','redirect_uri'=>null));
+        $cache->set('oauth_access_tokens/testtoken', array('access_token'=>'testtoken', 'client_id' => "Some Client",'user_id'=>null,'expires'=>null,'scope'=>null));
+        $cache->set('oauth_authorization_codes/testcode', array('authorization_code' => 'testcode', 'client_id' => 'Some Client', 'user_id'=>null, 'redirect_uri'=>null, 'expires'=>null, 'scope'=>null));
+        $cache->set('oauth_users/testuser', array('username'=>'testuser', 'password'=>'password', 'first_name'=>null,'last_name'=>null));
+        return $cache;
+    }
+    
+    public function getYiiCache()
+    {
+        if ( !$this->yiicache ) {
+            $this->removeCacheDir();
+            $cache = $this->createCache();
+            $this->yiicache = new \OAuth2\Storage\YiiCache($cache);
+        }
+        return $this->yiicache;
     }
 }
