@@ -62,7 +62,7 @@ class ClientController extends CController
             $client = $this->getOAuthClient();
             $client->setAccessToken(Yii::app()->session['oauth_token']['access_token']);
             $response = $client->fetch($this->getResourceUrl('me'));
-            var_dump($response);
+            var_dump(Yii::app()->session['oauth_token'], $response);
             // echo $response['result'];
         } else {
             $this->forward('index');

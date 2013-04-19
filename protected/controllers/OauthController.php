@@ -24,7 +24,7 @@ class OauthController extends Controller
 
     public function actionAccess_Token()
     {
-        $response = Yii::app()->oauthServer->handleGrantRequest(OAuth2_Request::createFromGlobals());
+        $response = Yii::app()->oauthServer->handleTokenRequest(OAuth2_Request::createFromGlobals());
         $response->send();
     }
 }
