@@ -55,6 +55,6 @@ return array(
 	'params'=>array(
 		// this is used in contact page
 		'adminEmail'=>'wenbinye@163.com',
-        'oauthServerHost' => $_SERVER['HTTP_HOST'],
+        'oauthServerHost' => isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'localhost',
 	),
 );

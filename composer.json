@@ -7,5 +7,10 @@
     "yiisoft/yii": "dev-master",
     "bshaffer/oauth2-server-php": "dev-develop",
     "adoy/oauth2": "dev-master" 
+  },
+  "autoload" : {
+    "psr-0" : {
+      "" : "protected/extensions/"
+    }
   }
 }
